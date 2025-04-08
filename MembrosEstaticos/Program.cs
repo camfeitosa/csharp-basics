@@ -5,22 +5,25 @@ namespace MembrosEstaticos
 {
     internal class Program
     {
-        static double Pi = 3.14
 
         static void Main(string[] args)
         {
             Console.WriteLine("Entre o valor do raio: ");
             double raio = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-            double circ = Circunferencia(raio);
+            // chama direto pela classe, sem precisar ser instanciada em um obj
+            double circ = Calculadora.Circunferencia(raio);
+            double volume = Calculadora.Volume(raio);
 
-            Console.WriteLine("Circunferencia: " + circ);
+            Console.WriteLine("Circunferencia: " + circ.ToString("F2", CultureInfo.InvariantCulture));
+            Console.WriteLine("Volume: " + volume);
+            Console.WriteLine("Valor de Pi: " + Calculadora.Pi);
 
         }
 
-        static double Circunferencia(double r)
-        {
-            return 2 * Pi * r
-        }
+        // static para poder ser chamado em outra função static
+        // funções auxiliares dentro da classe principal
+
+
     }
 }
