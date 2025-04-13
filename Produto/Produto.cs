@@ -3,14 +3,14 @@ using System.Globalization;
 
 namespace ProjetoProduto
 {
-    internal class Produto
+    internal class Produto // por padrão é internal
     {
-        public string Nome;
-        public double Preco;
-        public int Quantidade;
+        private string _nome;
+        public double Preco { get; private set; }
+        public int Quantidade { get; private set; } // impede que o usuario mude o valor de Quantidade
 
         // mesmo nome da classe
-        // atribuir cada parametro que irá receber no atributo existente
+        // atribuir cada parametro que irá receber -> atributo existente
         // dado que chegou pelo construtor
 
         public Produto()
@@ -20,18 +20,24 @@ namespace ProjetoProduto
 
         public Produto(string nome, double preco, int quantidade)
         {
-            Nome = nome;
+            _nome = nome;
             Preco = preco;
             Quantidade = quantidade;
         }
 
-        public Produto(string nome, double preco)
+        // Propriedade
+        // Nome possui uma lógica particular - sem auto properties
+        public string Nome
         {
-            Nome = nome;
-            Preco= preco;
-            Quantidade = 0; // linha dispensável, pois quando é nulo o zero é padrão
+            get { return _nome; }
+            set
+            {
+                if (value != null && value.Length > 1)
+                {
+                    _nome = value; // value -> representa o valor que chegaria como parametro
+                }
+            }
         }
-
 
         public double ValorTotalEmEstoque()
         {
@@ -50,7 +56,7 @@ namespace ProjetoProduto
 
         public override string ToString() // override indica que operação veio de outra classe
         {
-            return Nome + ", $ " + Preco.ToString("F2", CultureInfo.InvariantCulture) + ", " + Quantidade + " unidades, Total: $" + ValorTotalEmEstoque().ToString("F2", CultureInfo.InvariantCulture);
+            return _nome + ", $ " + Preco.ToString("F2", CultureInfo.InvariantCulture) + ", " + Quantidade + " unidades, Total: $" + ValorTotalEmEstoque().ToString("F2", CultureInfo.InvariantCulture);
         }
     }
 }
